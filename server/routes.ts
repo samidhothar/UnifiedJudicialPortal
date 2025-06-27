@@ -76,6 +76,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const user = await storage.getUserByCredentials(identifier, role);
+      console.log("Debug - identifier:", identifier, "role:", role);
+      console.log("Debug - found user:", user ? "YES" : "NO");
+      if (user) {
+        console.log("Debug - user password:", user.password, "provided password:", password);
+      }
+      
       if (!user || user.password !== password) {
         return res.status(401).json({ message: "Invalid credentials" });
       }

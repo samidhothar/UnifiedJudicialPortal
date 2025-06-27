@@ -50,11 +50,23 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByCredentials(identifier: string, role: string): Promise<User | undefined> {
-    const [user] = await db
+    // Try to find user by cnicOrBarIdOrJudgeCode first
+    let user = await db
       .select()
       .from(users)
-      .where(and(eq(users.cnicOrBarIdOrJudgeCode, identifier), eq(users.role, role)));
-    return user || undefined;
+      .where(and(eq(users.cnicOrBarIdOrJudgeCode, identifier), eq(users.role, role)))
+      .limit(1);
+    
+    // If not found, try by username for roles that use username
+    if (user.length === 0) {
+      user = await db
+        .select()
+        .from(users)
+        .where(and(eq(users.username, identifier), eq(users.role, role)))
+        .limit(1);
+    }
+    
+    return user[0] || undefined;
   }
 
   async createUser(userData: InsertUser): Promise<User> {
