@@ -105,7 +105,14 @@ The system uses a relational database with four main entities:
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+- **June 27, 2025**: Fixed authentication polling issue causing blank screens
+- **June 27, 2025**: Resolved CaseDetail component crash on undefined status
+- **June 27, 2025**: Verified all four role-based login systems working
+- **June 27, 2025**: Confirmed case management, evidence vault, and AI integration operational
+
 ## Changelog
 
 Changelog:
-- June 27, 2025. Initial setup
+- June 27, 2025. Initial setup and core functionality completed

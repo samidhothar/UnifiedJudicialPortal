@@ -69,7 +69,8 @@ export default function CaseDetail() {
     },
   });
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string | undefined) => {
+    if (!status) return "status-filed";
     switch (status) {
       case "filed": return "status-filed";
       case "pending": return "status-pending"; 
@@ -140,7 +141,7 @@ export default function CaseDetail() {
             </div>
             <div className="flex items-center space-x-4">
               <Badge className={getStatusColor(caseData.status)}>
-                {caseData.status.replace("-", " ").toUpperCase()}
+                {caseData.status?.replace("-", " ").toUpperCase() || "UNKNOWN"}
               </Badge>
               <Button className="judicial-button-primary">
                 <Download className="h-4 w-4 mr-2" />
@@ -218,7 +219,7 @@ export default function CaseDetail() {
                           Status
                         </label>
                         <Badge className={getStatusColor(caseData.status)}>
-                          {caseData.status.replace("-", " ").toUpperCase()}
+                          {caseData.status?.replace("-", " ").toUpperCase() || "UNKNOWN"}
                         </Badge>
                       </div>
                       <div>
@@ -259,7 +260,7 @@ export default function CaseDetail() {
                           </p>
                         </div>
                       </div>
-                      {caseData.status !== "filed" && (
+                      {caseData.status && caseData.status !== "filed" && (
                         <div className="flex items-start space-x-3">
                           <div className="w-2 h-2 bg-yellow-600 rounded-full mt-2 flex-shrink-0"></div>
                           <div>
