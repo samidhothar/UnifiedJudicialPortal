@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useAuth } from "@/hooks/useAuth";
-import type { Case } from "@/types";
+import { HearingTimeline } from "@/components/HearingTimeline";
+import type { Case, Hearing } from "@/types";
 
 export default function JudgeDashboard() {
   const { user, logout } = useAuth();
@@ -16,6 +17,16 @@ export default function JudgeDashboard() {
 
   const { data: stats } = useQuery({
     queryKey: ["/api/dashboard/stats"],
+  });
+
+  // Get all hearings for judge's cases
+  const { data: allHearings } = useQuery<Hearing[]>({
+    queryKey: ["/api/hearings/judge"],
+    queryFn: async () => {
+      const response = await fetch("/api/hearings/judge", { credentials: "include" });
+      if (!response.ok) throw new Error("Failed to fetch hearings");
+      return response.json();
+    },
   });
 
   const todaysCases = cases?.filter(c => 

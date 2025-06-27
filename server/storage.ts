@@ -282,23 +282,157 @@ export class DatabaseStorage implements IStorage {
         }
       }
 
-      // Create sample hearings
-      const sampleHearings = [
-        {
-          caseId: createdCases[0].id,
-          dateTime: new Date("2024-03-20T10:00:00Z"),
-          location: "Court Room 3",
-          videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[0].id,
-          remarks: "Initial hearing for case presentation"
-        },
-        {
-          caseId: createdCases[1].id,
-          dateTime: new Date("2024-03-22T14:00:00Z"),
-          location: "Court Room 1",
-          videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[1].id,
-          remarks: "Witness testimony session"
-        }
-      ];
+      // Create comprehensive hearing timelines based on case types
+      const sampleHearings = [];
+      
+      // Property Dispute Case (Case 0) - Complex timeline
+      if (createdCases[0]) {
+        sampleHearings.push(
+          {
+            caseId: createdCases[0].id,
+            dateTime: new Date("2024-01-15T10:00:00Z"),
+            location: "Court Room 3",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[0].id,
+            remarks: "Case filing and preliminary hearing - Documents verified"
+          },
+          {
+            caseId: createdCases[0].id,
+            dateTime: new Date("2024-02-10T14:00:00Z"),
+            location: "Court Room 3",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[0].id,
+            remarks: "Evidence presentation - Property surveys and ownership documents"
+          },
+          {
+            caseId: createdCases[0].id,
+            dateTime: new Date("2024-03-05T11:00:00Z"),
+            location: "Court Room 3",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[0].id,
+            remarks: "Witness testimonies - Neighbors and property experts"
+          },
+          {
+            caseId: createdCases[0].id,
+            dateTime: new Date("2024-03-28T09:30:00Z"),
+            location: "Court Room 3",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[0].id,
+            remarks: "Final arguments and judgment reserved"
+          }
+        );
+      }
+      
+      // Criminal Case (Case 1) - Urgent timeline
+      if (createdCases[1]) {
+        sampleHearings.push(
+          {
+            caseId: createdCases[1].id,
+            dateTime: new Date("2024-01-20T09:00:00Z"),
+            location: "Court Room 1",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[1].id,
+            remarks: "First production - Charges read, bail application"
+          },
+          {
+            caseId: createdCases[1].id,
+            dateTime: new Date("2024-02-15T10:30:00Z"),
+            location: "Court Room 1",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[1].id,
+            remarks: "Evidence recording - Forensic reports and CCTV footage"
+          },
+          {
+            caseId: createdCases[1].id,
+            dateTime: new Date("2024-03-12T11:00:00Z"),
+            location: "Court Room 1",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[1].id,
+            remarks: "Victim and witness examination - Cross-examination"
+          },
+          {
+            caseId: createdCases[1].id,
+            dateTime: new Date("2024-04-02T14:00:00Z"),
+            location: "Court Room 1",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[1].id,
+            remarks: "Defense arguments and prosecution rebuttal"
+          }
+        );
+      }
+      
+      // Family Case (Case 2) - Sensitive timeline
+      if (createdCases[2]) {
+        sampleHearings.push(
+          {
+            caseId: createdCases[2].id,
+            dateTime: new Date("2024-02-01T15:00:00Z"),
+            location: "Family Court Room",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[2].id,
+            remarks: "Initial custody hearing - Best interest of child assessment"
+          },
+          {
+            caseId: createdCases[2].id,
+            dateTime: new Date("2024-02-25T16:00:00Z"),
+            location: "Family Court Room",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[2].id,
+            remarks: "Social worker reports and psychological evaluation"
+          },
+          {
+            caseId: createdCases[2].id,
+            dateTime: new Date("2024-03-25T11:00:00Z"),
+            location: "Family Court Room",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[2].id,
+            remarks: "Final custody determination hearing"
+          }
+        );
+      }
+      
+      // Corporate Case (Case 3) - Commercial timeline
+      if (createdCases[3]) {
+        sampleHearings.push(
+          {
+            caseId: createdCases[3].id,
+            dateTime: new Date("2024-01-10T10:00:00Z"),
+            location: "Commercial Court",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[3].id,
+            remarks: "Contract dispute - Initial pleadings and discovery orders"
+          },
+          {
+            caseId: createdCases[3].id,
+            dateTime: new Date("2024-02-20T13:00:00Z"),
+            location: "Commercial Court",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[3].id,
+            remarks: "Expert testimony on contract terms and damages"
+          },
+          {
+            caseId: createdCases[3].id,
+            dateTime: new Date("2024-03-15T14:30:00Z"),
+            location: "Commercial Court",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[3].id,
+            remarks: "Final judgment - Contract breach confirmed, damages awarded"
+          }
+        );
+      }
+      
+      // Tax Case (Case 4) - Administrative timeline
+      if (createdCases[4]) {
+        sampleHearings.push(
+          {
+            caseId: createdCases[4].id,
+            dateTime: new Date("2024-02-05T09:00:00Z"),
+            location: "Tax Tribunal",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[4].id,
+            remarks: "Appeal hearing - Tax assessment challenge filed"
+          },
+          {
+            caseId: createdCases[4].id,
+            dateTime: new Date("2024-03-01T10:30:00Z"),
+            location: "Tax Tribunal",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[4].id,
+            remarks: "Revenue authority response - Documentation review"
+          },
+          {
+            caseId: createdCases[4].id,
+            dateTime: new Date("2024-03-28T09:00:00Z"),
+            location: "Tax Tribunal",
+            videoUrl: "https://meet.jit.si/JudicialHearing-" + createdCases[4].id,
+            remarks: "Final hearing - Appeal decision pending"
+          }
+        );
+      }
 
       for (const hearingData of sampleHearings) {
         try {

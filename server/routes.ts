@@ -236,6 +236,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Hearing routes for role-based access
+  app.get("/api/hearings/judge", requireAuth, requireRole(["judge"]), async (req: any, res) => {
+    try {
+      const userId = req.session.user.id;
+      const judgeCases = await storage.getCasesByJudge(userId);
+      
+      let allHearings: any[] = [];
+      for (const case_ of judgeCases) {
+        const hearings = await storage.getHearingsByCase(case_.id);
+        allHearings = allHearings.concat(hearings);
+      }
+      
+      res.json(allHearings);
+    } catch (error) {
+      console.error("Error fetching judge hearings:", error);
+      res.status(500).json({ message: "Failed to fetch hearings" });
+    }
+  });
+
+  app.get("/api/hearings/user", requireAuth, async (req: any, res) => {
+    try {
+      const userId = req.session.user.id;
+      const userRole = req.session.user.role;
+      
+      let allHearings: any[] = [];
+      
+      if (userRole === "citizen") {
+        const userCases = await storage.getCasesByUser(userId);
+        for (const case_ of userCases) {
+          const hearings = await storage.getHearingsByCase(case_.id);
+          allHearings = allHearings.concat(hearings);
+        }
+      } else if (userRole === "advocate") {
+        const cases = await storage.getCases();
+        for (const case_ of cases) {
+          const hearings = await storage.getHearingsByCase(case_.id);
+          allHearings = allHearings.concat(hearings);
+        }
+      } else if (userRole === "clerk") {
+        const cases = await storage.getCases();
+        for (const case_ of cases) {
+          const hearings = await storage.getHearingsByCase(case_.id);
+          allHearings = allHearings.concat(hearings);
+        }
+      }
+      
+      res.json(allHearings);
+    } catch (error) {
+      console.error("Error fetching user hearings:", error);
+      res.status(500).json({ message: "Failed to fetch hearings" });
+    }
+  });
+
   // AI Brief route
   app.get("/api/ai/brief", requireAuth, async (req, res) => {
     try {
