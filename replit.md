@@ -107,6 +107,9 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **June 27, 2025**: Added comprehensive hearing timeline system with role-based visibility
+- **June 27, 2025**: Enhanced seed data with realistic case-specific hearing schedules
+- **June 27, 2025**: Implemented HearingTimeline component with case type-specific workflows
 - **June 27, 2025**: Fixed authentication polling issue causing blank screens
 - **June 27, 2025**: Resolved CaseDetail component crash on undefined status
 - **June 27, 2025**: Verified all four role-based login systems working

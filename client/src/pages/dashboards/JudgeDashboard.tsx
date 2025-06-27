@@ -218,6 +218,15 @@ export default function JudgeDashboard() {
               </CardContent>
             </Card>
 
+            {/* Comprehensive Hearing Timeline */}
+            <div className="lg:col-span-2">
+              <HearingTimeline 
+                hearings={allHearings || []} 
+                userRole="judge"
+                showCaseTitle={true}
+              />
+            </div>
+
             {/* Recent Decisions */}
             <Card className="judicial-card">
               <CardHeader>
