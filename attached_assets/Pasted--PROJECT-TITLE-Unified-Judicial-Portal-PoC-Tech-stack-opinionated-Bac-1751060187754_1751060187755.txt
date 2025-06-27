@@ -1,0 +1,60 @@
+🔧 **PROJECT TITLE:** Unified Judicial Portal – PoC  
+
+📚 **Tech stack (opinionated):**  
+- **Backend:** Python 3.12 + FastAPI, SQLModel (async), Uvicorn, Postgres 15  
+- **Auth:** Keycloak (OpenID-Connect) with four realm roles: citizen, advocate, judge, clerk  
+- **AI helper:** OpenAI function-calling endpoint (stub) for precedent search  
+- **Frontend:** React 18 + Vite + Ant Design v5 + React Router v6  
+- **State:** TanStack Query  
+- **Containers:** Docker-compose with separate services for api, frontend, db, keycloak  
+- **Tests:** pytest + httpx + React Testing Library  
+- **Lint/Formatting:** Ruff & Black (backend); ESLint & Prettier (frontend)  
+
+🏗️ **Required backend features**  
+1. **/auth/** endpoints that proxy Keycloak login & token refresh (keep it simple).  
+2. **CRUD for:**  
+   - users (id, role, cnic_or_bar_id_or_judge_code, name, phone)  
+   - cases (id, title, type, status, filed_by, assigned_judge, next_hearing, created_at)  
+   - evidence (id, case_id, filename, hash, uploaded_by, evidence_type)  
+   - hearings (id, case_id, date_time, location, video_url, remarks)  
+3. **Dummy seed script** that inserts:  
+   - 3 citizens, 2 advocates, 1 judge, 1 clerk  
+   - 5 sample cases (tax, property, family, corporate, criminal) with assorted hearings & evidence  
+4. **/ai/brief?case_id=** → returns a fake JSON “AI case brief” (static lorem ipsum).  
+
+💻 **Required frontend pages**  
+1. **Landing / Login selector** (four cards: Citizen, Advocate, Judge, Clerk).  
+2. **Login views**  
+   - **CitizenLogin.jsx** – CNIC, OTP field (use mocked 123456).  
+   - **AdvocateLogin.jsx** – Bar ID + password.  
+   - **JudgeLogin.jsx** – Judge Code + password (show “Biometric Coming Soon” badge).  
+   - **ClerkLogin.jsx** – Username + password.  
+3. **Role-based dashboards**  
+   - **CitizenDashboard** – “File New Case” wizard + list of my cases + next hearing card.  
+   - **AdvocateDashboard** – Bulk e-filing upload, calendar view, AI brief button.  
+   - **JudgeDashboard** – Today’s cause-list, AI summaries sidebar, video-join link.  
+   - **ClerkDashboard** – Intake queue table, payment reconciliation widget.  
+4. **CaseDetail.jsx** route shared by all roles with tabs: Overview │ Evidence Vault (upload) │ Hearings Timeline │ AI Brief.  
+
+🎨 **UI/UX hints**  
+- Ant Design `ProLayout` for dashboards, `Steps` component for filing wizard, `Upload.Dragger` for evidence.  
+- Status pills: filed → pending → in-hearing → decided (Ant Badge).  
+- Dummy video links use public Jitsi room URLs.  
+
+🛠️ **Code-gen tasks / checkpoints**  
+1. Scaffold repo with `frontend/` & `backend/` folders + `docker-compose.yml`.  
+2. Generate SQLModel ORM models & Alembic migrations.  
+3. Auto-create Keycloak realm + client via bash script.  
+4. Produce REST controllers, then React pages with protected routes.  
+5. Seed DB with the dummy data.  
+6. Provide `README.md` with quick-start: `docker-compose up --build`, then access:  
+   - Frontend: `http://localhost:5173`  
+   - API docs: `http://localhost:8000/docs`  
+   - Keycloak: `http://localhost:8080`  
+
+⚠️ **Keep it PoC-light** – no email sending, no real payment integration; OTP & AI endpoints are mocked.
+
+🚀 **GOAL:** A developer can spin up the whole stack in < 10 minutes and demo:  
+- Four distinct login screens → token-protected dashboards  
+- Citizen files a new dummy case → Judge sees it in cause-list → Opens AI brief → Clerk uploads evidence.
+
