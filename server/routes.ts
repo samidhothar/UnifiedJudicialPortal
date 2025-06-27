@@ -2,9 +2,16 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { generateCaseBrief } from "./openai";
-import { insertUserSchema, insertCaseSchema, insertEvidenceSchema, insertHearingSchema } from "@shared/schema";
+import { insertUserSchema, insertCaseSchema, insertEvidenceSchema, insertHearingSchema, type User } from "@shared/schema";
 import session from "express-session";
 import crypto from "crypto";
+
+// Extend session interface to include user
+declare module "express-session" {
+  interface SessionData {
+    user?: User;
+  }
+}
 
 // Simple session middleware
 const sessionMiddleware = session({
