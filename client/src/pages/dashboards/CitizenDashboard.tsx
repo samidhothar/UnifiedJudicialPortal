@@ -9,11 +9,13 @@ import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { CaseFilingWizard } from "@/components/CaseFilingWizard";
 import { GlassNavbar } from "@/components/GlassNavbar";
+import { FeeEstimator } from "@/components/FeeEstimator";
 import type { Case } from "@/types";
 
 export default function CitizenDashboard() {
   const { user, logout } = useAuth();
   const [showFilingWizard, setShowFilingWizard] = useState(false);
+  const [showFeeEstimator, setShowFeeEstimator] = useState(false);
 
   const { data: cases, isLoading: casesLoading } = useQuery<Case[]>({
     queryKey: ["/api/cases"],
@@ -54,7 +56,7 @@ export default function CitizenDashboard() {
                 </CardContent>
               </Card>
               
-              <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200">
+              <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200" onClick={() => setShowFeeEstimator(true)}>
                 <CardContent className="p-4 text-center">
                   <CreditCard className="h-8 w-8 text-green-400 mx-auto mb-2" />
                   <h3 className="font-semibold text-white mb-1">Fee Estimator</h3>
@@ -311,6 +313,14 @@ export default function CitizenDashboard() {
         <CaseFilingWizard
           isOpen={showFilingWizard}
           onClose={() => setShowFilingWizard(false)}
+        />
+      )}
+
+      {/* Fee Estimator Modal */}
+      {showFeeEstimator && (
+        <FeeEstimator
+          isOpen={showFeeEstimator}
+          onClose={() => setShowFeeEstimator(false)}
         />
       )}
     </div>

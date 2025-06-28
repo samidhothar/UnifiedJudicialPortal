@@ -107,6 +107,12 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **June 28, 2025**: Implemented sophisticated glassmorphism dark mode theme with backdrop blur effects
+- **June 28, 2025**: Created ThemeProvider with localStorage persistence and toggle functionality
+- **June 28, 2025**: Enhanced citizen dashboard with glassmorphism cards and status indicators
+- **June 28, 2025**: Added comprehensive FeeEstimator component with Pakistani court fee calculations
+- **June 28, 2025**: Integrated GlassNavbar with KYC status badges and smart notifications
+- **June 28, 2025**: Enhanced case progress visualization with color-coded status system
 - **June 27, 2025**: Added comprehensive hearing timeline system with role-based visibility
 - **June 27, 2025**: Enhanced seed data with realistic case-specific hearing schedules
 - **June 27, 2025**: Implemented HearingTimeline component with case type-specific workflows
