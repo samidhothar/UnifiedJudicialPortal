@@ -1,0 +1,100 @@
+Judicial Suite v2 — Dark Glasmorphism UI for Judge & Court-Clerk roles (Pakistan Courts)”
+
+🎨 Universal Look & Feel
+Inherit the Citizen Portal’s dark-mode glasmorphism:
+
+css
+Copy
+Edit
+:root{
+  --bg-primary:#0f1116;      /* deep charcoal                       */
+  --bg-glass:rgba(255,255,255,.05);
+  --border-glass:rgba(255,255,255,.15);
+  --txt-primary:#e6e6e6;
+  --accent-blue:#1473e6;     /* action / links                      */
+  --accent-green:#52c41a;    /* success chips                       */
+  --accent-yellow:#d4b106;   /* warnings                            */
+  --accent-purple:#722ed1;   /* decided / archived                  */
+}
+.glass-card{
+  backdrop-filter: blur(16px) saturate(160%);
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+Components: sticky glass navbar, frosted sidebar, widget cards, modal forms.
+Toggle: global light/dark 🌙 / ☀️ (retains localStorage state).
+
+🧑‍⚖️ Judge Portal — Core Features
+Module	Purpose	Key UI widgets
+Case Queue	Prioritised list (auto-sorted by urgency & age).	Glass table → columns: CaseID, Parties, Next Action, SLA clock chip. Bulk-select → “Batch Hear”.
+Daily Calendar	One-glance hearing schedule.	Full-height left pane; drag-to-re-slot; colour-coded by courtroom vs. virtual.
+AI Brief	Auto-generated synopsis & precedent pack.	“Generate” button → drawer shows summary, key statutes, suggested questions.
+Evidence Viewer	Browse exhibits inline.	Tabs for Docs, Media, Physical; side-by-side PDF & annotation pane; hash checksum visible.
+Virtual Bench	Conduct remote hearings.	One-click join; participants list; mute/remove; timestamped note-taking panel.
+Deliberation Pad	Draft judgment collaboratively with clerks.	Markdown editor + comment threads; AI citation lookup.
+Performance Analytics	Backlog trends, mean disposal days, adjournment matrix.	Mini dashboards on home.
+
+📝 Clerk Portal — Core Features
+Module	Purpose	Key UI widgets
+Intake Vetting	Approve/reject citizen filings.	Kanban: “New → Review → Approved → Rework”. Checklist auto-marks missing docs.
+Fee Reconciliation	Track payments in vs. challans issued.	Table with SBPP/JazzCash hooks; mismatches flagged red → “Resolve” modal.
+Evidence Chain-of-Custody	Maintain physical–digital link.	Scan QR → form pops to log location & condition; timeline view per exhibit.
+Scheduling Hub	Publish time blocks, handle reschedule requests.	Calendar overlay; conflict heat-map; auto fee calculation for late changes.
+Hearing Attendance	Mark present/absent & generate attendance slip.	Toggle chips during live session; auto-push to Judge’s timeline.
+Outgoing Orders Desk	Issue certified copies & payment awards.	Batch print / e-dispatch; courier tracking column.
+Notification Centre	Bulk SMS/WhatsApp/email blasts (next-day lists).	Template picker, multilingual support (Urdu/English).
+
+🔄 Shared Components
+Top Navbar
+
+Role badge (Judge ♔ / Clerk 🗂️).
+
+Dark-mode toggle, KYC status dot, profile dropdown.
+
+Side Navigation
+
+Collapsible; icons with tooltips; active link neon glow (accent-blue).
+
+Search Everywhere (Ctrl + K)
+
+Fuzzy search cases, parties, statutes.
+
+Accessibility
+
+WCAG AA colour contrast, keyboard-nav outlines, live-region for status updates.
+
+🛠️ Implementation Tasks
+Route scaffold:
+/judge → /queue • /case/:id • /calendar • /analytics
+/clerk → /intake • /fees • /evidence • /schedule • /orders • /notices
+
+Context providers for role, theme, and websocket notifications.
+
+API adapters
+
+GET /cases?role=judge prioritised feed.
+
+PATCH /cases/:id/status (clerk intake).
+
+GET /analytics/bench-metrics etc.
+
+WebRTC wrapper (reuse Citizen Virtual Courtroom).
+
+AI Brief hook (call /ai/brief?caseId=...).
+
+🗣️ Micro-copy
+Judge dashboard header: “Good morning, Justice {{lastName}} — you have {{count}} matters today.”
+
+Clerk intake tooltip: “Ensure CNIC images are clear; reject blurry uploads.”
+
+Empty states: “No cases awaiting review 🎉” / “No upcoming hearings yet — enjoy your tea!”
+
+🔏 Legal & Compliance
+Evidence hash & chain-of-custody per Qanun-e-Shahadat Art 77-79.
+
+Fee tables reference Court-Fee Act 1870 schedules A & B.
+
+Attendance and orders logged to immutable Kafka topic for audit (Rule 9, High Court e-Procedure Rules 2023).
+
