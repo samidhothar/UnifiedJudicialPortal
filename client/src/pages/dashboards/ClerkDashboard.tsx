@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { ClipboardList, FileText, DollarSign, Clock, CheckCircle, AlertCircle } from "lucide-react";
+import { ClipboardList, FileText, DollarSign, Clock, CheckCircle, AlertCircle, Folder, QrCode, MessageSquare, Printer, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
+import { GlassNavbar } from "@/components/GlassNavbar";
 import type { Case } from "@/types";
 
 export default function ClerkDashboard() {
@@ -36,47 +37,105 @@ export default function ClerkDashboard() {
     }
   };
 
+  const currentTime = new Date().toLocaleTimeString('en-PK', { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    hour12: true 
+  });
+  
+  const greeting = new Date().getHours() < 12 ? 'Good morning' : 
+                   new Date().getHours() < 17 ? 'Good afternoon' : 'Good evening';
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 judicial-shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <ClipboardList className="text-yellow-600 h-6 w-6 mr-3" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-yellow-900 to-slate-800">
+      <GlassNavbar showKycBadge={false} />
+      
+      {/* Clerk Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="glass-card p-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full flex items-center justify-center">
+                <Folder className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Court Clerk Dashboard</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{user?.name}</p>
+                <h1 className="text-xl font-bold text-white">
+                  {greeting}, {user?.name?.split(' ')[0] || 'Clerk'}
+                </h1>
+                <p className="text-white/70">
+                  {intakeQueue.length} cases in queue • {currentTime} PKT
+                </p>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <Badge variant="outline" className="text-green-600 border-green-600">
+            <div className="flex items-center space-x-3">
+              <Badge className="status-badge status-in-hearing">
                 <CheckCircle className="h-3 w-3 mr-1" />
                 System Online
               </Badge>
-              <div className="relative">
-                <Button
-                  variant="ghost"
-                  onClick={() => logout()}
-                  className="flex items-center text-gray-700 dark:text-gray-300 hover:text-yellow-600"
-                >
-                  <div className="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center text-white text-sm mr-2">
-                    {user?.name?.split(' ').map(n => n[0]).join('') || 'C'}
-                  </div>
-                  <span className="text-xs">Logout</span>
-                </Button>
-              </div>
+              <Button className="judicial-button-warning">
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Notifications
+              </Button>
             </div>
           </div>
         </div>
-      </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Clerk Action Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6">
+          <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200">
+            <CardContent className="p-4 text-center">
+              <ClipboardList className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-white mb-1">Intake Vetting</h3>
+              <p className="text-white/70 text-xs">Review new filings</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200">
+            <CardContent className="p-4 text-center">
+              <DollarSign className="h-8 w-8 text-green-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-white mb-1">Fee Reconciliation</h3>
+              <p className="text-white/70 text-xs">Track payments</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200">
+            <CardContent className="p-4 text-center">
+              <QrCode className="h-8 w-8 text-purple-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-white mb-1">Evidence Chain</h3>
+              <p className="text-white/70 text-xs">Chain-of-custody</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200">
+            <CardContent className="p-4 text-center">
+              <Calendar className="h-8 w-8 text-orange-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-white mb-1">Scheduling Hub</h3>
+              <p className="text-white/70 text-xs">Manage hearings</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200">
+            <CardContent className="p-4 text-center">
+              <CheckCircle className="h-8 w-8 text-pink-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-white mb-1">Attendance</h3>
+              <p className="text-white/70 text-xs">Mark presence</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="glass-card cursor-pointer hover:scale-105 transition-transform duration-200">
+            <CardContent className="p-4 text-center">
+              <Printer className="h-8 w-8 text-cyan-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-white mb-1">Orders Desk</h3>
+              <p className="text-white/70 text-xs">Issue copies</p>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">
             {/* Intake Queue */}
-            <Card className="judicial-card">
+            <Card className="glass-card">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
                   <ClipboardList className="h-5 w-5 text-yellow-600 mr-2" />
