@@ -115,6 +115,7 @@ Preferred communication style: Simple, everyday language.
 - **June 28, 2025**: Created ThemeProvider with localStorage persistence and global dark/light mode toggle
 - **June 28, 2025**: Integrated GlassNavbar with KYC status badges, smart notifications, and role indicators
 - **June 28, 2025**: Enhanced case progress visualization with color-coded status system and glassmorphism cards
+- **June 28, 2025**: Created comprehensive README.md with portal details and demo account information for all four user roles
 - **June 27, 2025**: Added comprehensive hearing timeline system with role-based visibility
 - **June 27, 2025**: Enhanced seed data with realistic case-specific hearing schedules
 - **June 27, 2025**: Implemented HearingTimeline component with case type-specific workflows
