@@ -24,7 +24,9 @@
   --ring: hsl(215, 20%, 65%);
   --radius: 0.5rem;
   
-  /* Judicial theme colors */
+  /* Pakistan Courts enhanced theme colors */
+  --bg-primary: hsl(210, 20%, 98%);
+  --text-primary: hsl(222, 84%, 5%);
   --judicial-blue: hsl(207, 90%, 54%);
   --judicial-purple: hsl(263, 70%, 50%);
   --judicial-success: hsl(142, 71%, 45%);
@@ -36,14 +38,14 @@
 }
 
 .dark {
-  --background: hsl(222, 84%, 5%);
-  --foreground: hsl(210, 40%, 98%);
+  --background: hsl(218, 23%, 8%);
+  --foreground: hsl(210, 20%, 90%);
   --muted: hsl(217, 32%, 17%);
   --muted-foreground: hsl(215, 20%, 65%);
-  --popover: hsl(222, 84%, 5%);
-  --popover-foreground: hsl(210, 40%, 98%);
-  --card: hsl(222, 84%, 5%);
-  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(218, 23%, 8%);
+  --popover-foreground: hsl(210, 20%, 90%);
+  --card: hsl(218, 23%, 8%);
+  --card-foreground: hsl(210, 20%, 90%);
   --border: hsl(217, 32%, 17%);
   --input: hsl(217, 32%, 17%);
   --primary: hsl(207, 90%, 54%);
@@ -55,6 +57,10 @@
   --destructive: hsl(0, 62%, 30%);
   --destructive-foreground: hsl(210, 40%, 98%);
   --ring: hsl(217, 32%, 17%);
+  
+  /* Pakistan Courts dark theme */
+  --bg-primary: hsl(218, 23%, 8%);
+  --text-primary: hsl(210, 20%, 90%);
 }
 
 @layer base {
@@ -68,6 +74,45 @@
 }
 
 @layer components {
+  /* Glassmorphism Effects */
+  .glass-card {
+    backdrop-filter: blur(16px) saturate(160%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  .glass-card-light {
+    backdrop-filter: blur(16px) saturate(160%);
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+  }
+  
+  .glass-navbar {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .glass-modal {
+    backdrop-filter: blur(24px) saturate(200%);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+  }
+  
   .judicial-shadow {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
@@ -80,43 +125,118 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
+  /* Status badges with glassmorphism */
   .status-badge {
-    @apply inline-flex items-center px-2 py-1 rounded text-xs font-medium;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    backdrop-filter: blur(8px);
   }
   
   .status-filed {
-    @apply bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200;
+    background: rgba(20, 115, 230, 0.2);
+    border: 1px solid rgba(20, 115, 230, 0.3);
+    color: #1473e6;
   }
   
   .status-pending {
-    @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
+    background: rgba(212, 177, 6, 0.2);
+    border: 1px solid rgba(212, 177, 6, 0.3);
+    color: #d4b106;
   }
   
   .status-in-hearing {
-    @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200;
+    background: rgba(82, 196, 26, 0.2);
+    border: 1px solid rgba(82, 196, 26, 0.3);
+    color: #52c41a;
   }
   
   .status-decided {
-    @apply bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200;
+    background: rgba(114, 46, 209, 0.2);
+    border: 1px solid rgba(114, 46, 209, 0.3);
+    color: #722ed1;
   }
   
+  /* Enhanced judicial cards */
   .judicial-card {
-    @apply bg-white dark:bg-card rounded-lg judicial-shadow judicial-shadow-hover;
+    @apply glass-card;
   }
   
+  .judicial-card-light {
+    @apply glass-card-light;
+  }
+  
+  /* Case cards with status indicators */
+  .case-card-filed {
+    border-left: 4px solid #1473e6;
+  }
+  
+  .case-card-pending {
+    border-left: 4px solid #d4b106;
+  }
+  
+  .case-card-hearing {
+    border-left: 4px solid #52c41a;
+  }
+  
+  .case-card-decided {
+    border-left: 4px solid #722ed1;
+  }
+  
+  /* Buttons with glassmorphism */
   .judicial-button-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors;
+    @apply px-4 py-2 rounded-lg transition-all duration-300;
+    background: rgba(20, 115, 230, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(20, 115, 230, 0.3);
+    color: white;
+  }
+  
+  .judicial-button-primary:hover {
+    background: rgba(20, 115, 230, 0.9);
+    box-shadow: 0 4px 16px rgba(20, 115, 230, 0.3);
   }
   
   .judicial-button-success {
-    @apply bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors;
+    @apply px-4 py-2 rounded-lg transition-all duration-300;
+    background: rgba(82, 196, 26, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(82, 196, 26, 0.3);
+    color: white;
   }
   
   .judicial-button-warning {
-    @apply bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md transition-colors;
+    @apply px-4 py-2 rounded-lg transition-all duration-300;
+    background: rgba(212, 177, 6, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(212, 177, 6, 0.3);
+    color: white;
   }
   
   .judicial-button-purple {
-    @apply bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md transition-colors;
+    @apply px-4 py-2 rounded-lg transition-all duration-300;
+    background: rgba(114, 46, 209, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(114, 46, 209, 0.3);
+    color: white;
+  }
+  
+  /* Progress indicators */
+  .progress-dots {
+    @apply flex items-center space-x-2;
+  }
+  
+  .progress-dot {
+    @apply w-3 h-3 rounded-full transition-all duration-300;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .progress-dot.active {
+    background: rgba(20, 115, 230, 0.8);
+    box-shadow: 0 0 16px rgba(20, 115, 230, 0.4);
+  }
+  
+  .progress-dot.completed {
+    background: rgba(82, 196, 26, 0.8);
+    box-shadow: 0 0 16px rgba(82, 196, 26, 0.4);
   }
 }

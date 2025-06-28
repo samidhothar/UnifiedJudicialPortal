@@ -1,0 +1,103 @@
+Dark-mode Glasmorphism + Feature Boost (Pakistan Courts)”
+
+🎨 Look & Feel
+Switch to full dark theme
+
+Root variables (--bg-primary:#0f1116, --text-primary:#e6e6e6).
+
+HSL‐based palette to keep contrast AA+.
+
+Global toggle (moon / sun icon) stored in localStorage.
+
+Glasmorphism panels
+
+.glass‐card { backdrop-filter: blur(16px) saturate(160%); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); box-shadow:0 8px 32px rgba(0,0,0,0.35); border-radius:16px; }
+
+Apply to: case cards, modal steps, side-drawer, navbar.
+
+Frosted blur headers & sticky footer
+
+Semi-transparent header/footer that blur content under scroll.
+
+🆕 Citizen-Centric Features
+New module	Purpose	Key UI elements
+Guidelines Hub	Step-by-step help mapped to 🇵🇰 court procedures	Glass side-drawer → accordion (Filing > Evidence > Fees > Hearing > Appeal). Urdu/English tabs.
+Fee Estimator	Up-front cost clarity (court fee, stamp duty, service charges).	In “File New Case” wizard (step 4) show dynamic fee card; pay via JazzCash/EasyPaisa.
+NADRA e-KYC Status	Live ID verification → green tick or action required.	Badge beside user avatar; click to open KYC modal (CNIC + OTP).
+Evidence Checklist	Prevent rejection due to missing docs.	Auto‐generated list per case-type; progress ring; drag-and-drop uploads.
+Smart Notifications	Never miss a hearing.	Bell icon → timeline; toggle SMS/WhatsApp/email. Reminders 48h/24h/12h.
+Virtual Courtroom Join	One-click join link for approved e-hearings.	Timer chip turns green 10 min before start; joins WebRTC room.
+Timeline Heat-map	Visualise case aging.	In “Hearings Timeline” tab: vertical stack + colour bars (delay severity).
+My Lawyer Card	Display counsel info & quick contact.	Floating action button if no lawyer linked → “Find Registered Advocate” search.
+Court Locator	Show nearest e-court facility & document drop-box.	Mapbox mini-map + list view; filter by service.
+Activity Log	Immutable audit trail for transparency.	Read-only table (date, actor, action, IP).
+
+🛠️ Component-level Tasks
+Navbar
+
+Replace solid bar with .glass‐card + drop shadow.
+
+Add dark-mode toggle & KYC badge.
+
+Case Dashboard (“My Cases”)
+
+Convert each case item to glass card with left coloured bar → status (FILED = #1473e6, PENDING = #d4b106, IN HEARING = #52c41a, DECIDED = #722ed1).
+
+Expandable preview for next milestone + quick actions: “Upload Evidence”, “Pay Fee”, “Request Adjournment”.
+
+File-Case Wizard
+
+Four steps ➜ extend to six: Type → Details → Parties → Evidence → Fees → Review.
+
+Inject fee estimator & checklist in relevant steps.
+
+Use progress dots with blur shadow.
+
+Hearings Timeline
+
+Replace “N/A” placeholders with “Awaiting scheduling” chips.
+
+Add collapsible detail (order uploaded? ✓, attendance marked? ✗).
+
+Guidelines Drawer
+
+Trigger from question-mark circle bottom-right.
+
+Markdown content rendered with <ReactMarkdown>; bilingual toggle.
+
+📲 UX micro-copy
+“All times are Pakistan Standard Time (UTC+5).”
+
+“Fees are indicative; final challan issued after clerk vetting.”
+
+“Need help? Chat with our Digital Court Officer 09:00-17:00 PKT.”
+
+👩🏻‍⚖️ Legal Accuracy Hooks
+Case-type list follows High Court (Civil & Criminal Procedure) Rules 2021.
+
+Fee tables pulled from Court-Fee Act 1870 & Finance Act 2024 schedules.
+
+Evidence checklist aligns with Qanun-e-Shahadat Order 1984 sections 19–30.
+
+KYC flow mirrors NADRA Verisys spec v3.2.
+
+Implementation hints (React + AntD)
+tsx
+Copy
+Edit
+// theme token override
+import { theme } from 'antd';
+const { darkAlgorithm } = theme;
+...
+ConfigProvider theme={{ algorithm: darkAlgorithm, token: { colorBgContainer: 'rgba(255,255,255,0.05)', ... } }}>
+css
+Copy
+Edit
+/* glass-card base */
+.glass-card{
+  backdrop-filter: blur(16px) saturate(160%);
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
